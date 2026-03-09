@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 def garden_operations() -> None:
     ages = {'Jim': 30, 'Pam': 28}
     file = 'missing.txt'
@@ -18,18 +19,17 @@ def garden_operations() -> None:
     try:
         try:
             x = open(file)
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             raise FileNotFoundError(f"No such file '{file}'")
         if x:
             x.close()
     except FileNotFoundError as e:
         print(f"Caught FileNotFoundError: {e}")
-        
     print("\nTesting KeyError...")
     try:
-        print(ages['missing\_plant']) 
+        print(ages['missing\\_plant'])
     except KeyError as e:
-        print(f"Caught {type(e).__name__}: {e}")
+        print(f"Caught {type(e).__name__}: {e.args[0]}")
     print("\nTesting multiple errors together...")
     try:
         int("abc")
@@ -41,6 +41,7 @@ def garden_operations() -> None:
     except (ValueError, ZeroDivisionError, KeyError, FileNotFoundError):
         print("Caught an error, but program continues!")
 
+
 def test_error_types() -> None:
     print("=== Garden Error Types Demo ===\n")
     try:
@@ -48,6 +49,7 @@ def test_error_types() -> None:
     except Exception as e:
         print(f"Caught {type(e).__name__}: {e}")
     print("\nAll error types tested successfully!")
+
 
 if __name__ == "__main__":
     test_error_types()

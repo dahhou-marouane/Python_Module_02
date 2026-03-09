@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 class GardenError(Exception):
     pass
 
@@ -11,7 +12,11 @@ class WaterError(GardenError):
 
 
 def water(water: int) -> None:
-    if water > 3:
+    try:
+        int(water)
+    except (TypeError, ValueError):
+        raise WaterError("input tank water is not int")
+    if int(water) > 3:
         print("Enough water in the tank")
         return
     else:
@@ -19,7 +24,11 @@ def water(water: int) -> None:
 
 
 def plant_wilting(water: int) -> None:
-    if water > 3:
+    try:
+        int(water)
+    except (TypeError, ValueError):
+        raise PlantError("input water is not int")
+    if int(water) > 3:
         print("The tomato plant is good")
         return
     else:
@@ -29,16 +38,17 @@ def plant_wilting(water: int) -> None:
 def custom_errors() -> None:
     print("=== Custom Garden Errors Demo ===\n")
 
+    input = 0
     print("Testing PlantError...")
     try:
-        plant_wilting(0)
+        plant_wilting(input)
         print()
     except PlantError as e:
 
         print(f"Caught PlantError: {e}\n")
     print("Testing WaterError...")
     try:
-        water(0)
+        water(input)
         print()
     except WaterError as e:
         print(f"Caught WaterError: {e}\n")
@@ -46,7 +56,7 @@ def custom_errors() -> None:
     print("Testing catching all garden errors...")
     for test in (plant_wilting, water):
         try:
-            test(0)
+            test(input)
         except GardenError as e:
             print(f"Caught a garden error: {e}")
     print("\nAll custom error types work correctly!")
