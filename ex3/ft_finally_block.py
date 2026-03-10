@@ -20,13 +20,16 @@ def test_watering_system() -> None:
     print("\nCleanup always happens, even with errors!")
 
 
-def water_plants(plant_list: list) -> None:
-    if not plant_list:
+def water_plants(plant_list: list[str]) -> None:
+    if plant_list.__class__ is not list:
         print(f"Error: Plant list cannot be '{plant_list}'")
         return
     print("Opening watering system")
     try:
         for plant in plant_list:
+            if plant.__class__ is not str:
+                raise ValueError(f"Error: Cannot water {plant} - "
+                                 "invalid plant!")
             if plant is None:
                 raise ValueError(f"Error: Cannot water {plant} - "
                                  "invalid plant!")
