@@ -4,10 +4,15 @@ def check_plant_health(
          water_level: int,
          sunlight_hours: int
          ) -> str:
-    if plant_name == "":
+    if not plant_name:
         raise ValueError("Error: Plant name cannot be empty!")
-    elif plant_name is None:
-        raise ValueError("Error: Plant name cannot be None!")
+    try:
+        water_level = int(water_level)
+    except (TypeError, ValueError):
+        raise ValueError(
+                         f"Error: Water level '{water_level}' "
+                         "is not a valid number"
+                         )
     if water_level < 1:
         raise ValueError(
                          f"Error: Water level {water_level} "
@@ -17,6 +22,13 @@ def check_plant_health(
         raise ValueError(
                          f"Error: Water level {water_level} "
                          "is too high (max 10)"
+                         )
+    try:
+        sunlight_hours = int(sunlight_hours)
+    except (TypeError, ValueError):
+        raise ValueError(
+                         f"Error: Sunlight hours '{sunlight_hours}' "
+                         "is not a valid number"
                          )
     if sunlight_hours < 2:
         raise ValueError(
@@ -49,14 +61,14 @@ def test_plant_checks() -> None:
         print(e)
     try:
         print("\nTesting bad water level...")
-        print(check_plant_health("tomato", water_level, sunlight_hours))
+        print(check_plant_health(plant_name, water_level, sunlight_hours))
         print(f"Water level {water_level} is good", end="\n\n")
     except Exception as e:
         print(e)
     water_level = 8
     try:
         print("\nTesting bad sunlight hours...")
-        print(check_plant_health("tomato", water_level, sunlight_hours))
+        print(check_plant_health(plant_name, water_level, sunlight_hours))
         print(f"Sunlight hours {sunlight_hours} is good")
     except Exception as e:
         print(e)
@@ -64,4 +76,7 @@ def test_plant_checks() -> None:
 
 
 if __name__ == "__main__":
-    test_plant_checks()
+    try:
+        test_plant_checks()
+    except Exception as e:
+        print(e)

@@ -13,10 +13,10 @@ class WaterError(GardenError):
 
 def water(water: int) -> None:
     try:
-        int(water)
+        tank_water = int(water)
     except (TypeError, ValueError):
         raise WaterError("input tank water is not int")
-    if int(water) > 3:
+    if tank_water > 3:
         print("Enough water in the tank")
         return
     else:
@@ -25,10 +25,10 @@ def water(water: int) -> None:
 
 def plant_wilting(water: int) -> None:
     try:
-        int(water)
+        water_level = int(water)
     except (TypeError, ValueError):
         raise PlantError("input water is not int")
-    if int(water) > 3:
+    if water_level > 3:
         print("The tomato plant is good")
         return
     else:
@@ -63,4 +63,7 @@ def custom_errors() -> None:
 
 
 if __name__ == "__main__":
-    custom_errors()
+    try:
+        custom_errors()
+    except Exception as e:
+        print(e)

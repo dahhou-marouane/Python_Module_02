@@ -19,10 +19,11 @@ def garden_operations() -> None:
     try:
         try:
             x = open(file)
+            if x:
+                x.close()
+            print(f"File {file} found")
         except FileNotFoundError:
             raise FileNotFoundError(f"No such file '{file}'")
-        if x:
-            x.close()
     except FileNotFoundError as e:
         print(f"Caught FileNotFoundError: {e}")
     print("\nTesting KeyError...")
@@ -34,7 +35,7 @@ def garden_operations() -> None:
     try:
         int("abc")
         10 / 0
-        x = open("helo", "r")
+        x = open(file)
         if x:
             x.close()
         print(ages['missing_plant'])
@@ -52,4 +53,7 @@ def test_error_types() -> None:
 
 
 if __name__ == "__main__":
-    test_error_types()
+    try:
+        test_error_types()
+    except Exception as e:
+        print(e)
